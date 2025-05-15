@@ -1,0 +1,183 @@
+@use "./vars.scss";
+@use "./overrides.scss";
+
+:root {
+  --animation-time: #{vars.$animation-time};
+  --bg-pos-x: #{vars.$bg-pos-x};
+  --bg-pos-y: #{vars.$bg-pos-y};
+  --bg-zoom: #{vars.$bg-zoom};
+  --bg-grid-color: #{vars.$bg-grid-color};
+  --logo-speed: #{vars.$logo-speed};
+}
+
+@font-face {
+  font-family: mainfont;
+  src: url(vars.$font-url);
+}
+
+@keyframes glow {
+
+  0%,
+  25% {
+    text-shadow: vars.$text-glow-25;
+  }
+
+  100% {
+    text-shadow: vars.$text-glow-100;
+  }
+}
+
+* {
+  font-family: mainfont, "sans-serif";
+  text-align: center;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+
+    .background {
+      background-image: url(vars.$bg-url);
+      position: fixed;
+      padding: 0;
+      margin: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: all var(--animation-time) ease-out;
+      background-color: vars.$bg-color;
+      background-position: var(--bg-pos-x) var(--bg-pos-y);
+      background-size: var(--bg-zoom);
+      pointer-events: none;
+    }
+
+    .logocontainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      max-width: 800px;
+      height: clamp(50px, 15dvh, 350px);
+      margin-bottom: 5dvh;
+      padding-top: 5dvh;
+      position: relative;
+      z-index: 1;
+
+      .logo {
+        margin: auto;
+        width: 100%;
+        position: relative;
+        z-index: 0;
+        animation: glow 3s infinite alternate;
+        font-size: vars.$logo-font-size;
+        font-weight: vars.$logo-font-weight;
+        color: vars.$logo-color;
+      }
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 1dvh;
+
+      p {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        span {
+          animation: glow 3s infinite alternate;
+          font-size: vars.$header-font-size;
+          font-weight: vars.$header-font-weight;
+          color: vars.$header-color;
+        }
+      }
+    }
+
+    #searchbox {
+      text-shadow: vars.$searchbox-text-shadow;
+      font-weight: vars.$searchbox-font-weight;
+      font-size: vars.$searchbox-font-size;
+      color: vars.$searchbox-color;
+      max-width: 90dvw;
+      background-color: rgba(255, 255, 255, 0);
+      border: 0px;
+      position: relative;
+    }
+
+    #date {
+      color: vars.$date-color;
+      text-shadow: vars.$date-text-shadow;
+      font-size: vars.$date-font-size;
+      margin-top: 20px;
+      margin-bottom: 10px;
+
+      span {
+        position: relative;
+      }
+    }
+
+    .buttoncontainer {
+      position: relative;
+      margin: auto;
+      max-width: 800px;
+      width: 100dvw;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+
+      .button {
+        position: relative;
+        margin: 5px;
+        padding: 5px;
+        max-width: 160px;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: vars.$button-font-size;
+        font-variant: vars.$button-font-variant;
+        color: vars.$button-color;
+        text-shadow: vars.$button-text-shadow;
+        text-decoration: none;
+        cursor: pointer;
+
+        //button colors
+        --arwes-frames-bg-color: #{vars.$button-bg-color};
+        --arwes-frames-line-color: #{vars.$button-outline-color};
+        --arwes-frames-deco-color: hsl(0, 0%, 0%);
+
+        :hover {
+          --arwes-frames-bg-color: #{vars.$button-bg-hover-color};
+        }
+
+        span {
+          pointer-events: none;
+        }
+      }
+    }
+
+  }
+
+  .fadeOpaque {
+    transition: opacity 0.5s;
+    opacity: 1;
+  }
+
+  .fadeTransparent {
+    transition: opacity 0.5s;
+    opacity: 0.5;
+  }
+
+  .textLeft {
+    text-align: left;
+  }
+
+  .textCenter {
+    text-align: center;
+  }
+}

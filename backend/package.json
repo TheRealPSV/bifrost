@@ -1,0 +1,23 @@
+{
+  "name": "bifrost-backend",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "dotenvx run -f .env.local -- nodemon index.js",
+    "start": "dotenvx run -f .env.production -- node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.44.0",
+    "axios": "^1.9.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

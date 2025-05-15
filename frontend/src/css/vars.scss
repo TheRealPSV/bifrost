@@ -1,0 +1,44 @@
+$animation-time: 1s;
+$logo-speed: 30s;
+
+$text-glow-25: #00aaff 0px 0px 10px, #00aaff 0px 0px 20px, #00aaff 0px 0px 30px;
+$text-glow-100: #00aaff 0px 0px 10px, #00aaff 0px 0px 20px, #00aaff 0px 0px 30px, #00aaff 0px 0px 40px, #00aaff 0px 0px 50px;
+
+$font-url: "../font/Orbitron-VariableFont_wght.ttf";
+$bg-url: "../img/bg.jpg";
+
+$bg-pos-x: 0px;
+$bg-pos-y: 0px;
+$bg-zoom: auto;
+$bg-grid-color: #009dff88; //this is the color of the background gridlines
+$bg-color: #0088ff; //this is the background color if there's no image
+
+//page title logo
+$logo-font-size: clamp(50px, 6dvw, 300px);
+$logo-font-weight: 800;
+$logo-color: rgba(255, 255, 255, 0.75);
+
+//search header text
+$header-font-weight: 500;
+$header-font-size: clamp(40px, 3dvw, 60px);
+$header-color: rgba(255, 255, 255, 0.75);
+
+//searchbox text
+$searchbox-text-shadow: #00aaff 0px 0px 8px;
+$searchbox-font-weight: 400;
+$searchbox-font-size: clamp(30px, 2.5dvw, 50px);
+$searchbox-color: #0088ff;
+
+//date text
+$date-color: #00aaff;
+$date-text-shadow: #000000 0px 0px 2px, #000000 0px 0px 5px, #00aaff 0px 0px 8px;
+$date-font-size: clamp(20px, 1.5dvw, 40px);
+
+//buttons
+$button-font-size: 16px;
+$button-font-variant: small-caps;
+$button-color: rgba(255, 255, 255, 0.75); //text color
+$button-text-shadow: #00aaff 0px 0px 8px, #00aaff 0px 0px 8px, #00aaff 0px 0px 8px;
+$button-bg-color: #00aaff55;
+$button-bg-hover-color: #00aaffaa; //button bg color when you hover over it
+$button-outline-color: #00bbff;

@@ -1,0 +1,112 @@
+# A workflow, which builds the Bifrost Docker image and publishes it to the GitHub Container Registry
+name: Build and Publish Docker Images
+
+# Runs when a release is created
+on:
+  release:
+    types:
+        - released
+
+env:
+  REGISTRY: ghcr.io
+
+# This workflow has a single job, which builds the Docker image and publishes it to the GitHub Container Registry
+jobs:
+  # The `build-and-publish` builds the Docker image, and publishes it to the GitHub Container Registry
+  build-and-publish:
+    # This job will run on an Ubuntu GitHub runner, which is a good default choice and it comes with Docker pre-installed
+    runs-on: ubuntu-latest
+
+    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job
+    permissions:
+      contents: write
+      packages: write
+      attestations: write
+      id-token: write
+
+    # This job 1) checks out the repository, 2) logs in to the GitHub Container Registry, 3) extracts metadata for the Docker image, 4) builds and
+    # pushes the Docker image, and 5) generates an artifact attestation for the image
+    steps:
+      - name: lowercase repo name
+        id: lower_repo_name
+        uses: Entepotenz/change-string-case-action-min-dependencies@v1
+        with:
+          string: ${{ github.repository }}
+
+      - name: set IMAGE_NAME
+        run: |
+          echo "IMAGE_NAME=${{ steps.lower_repo_name.outputs.lowercase }}" >> "$GITHUB_ENV"
+
+      # Checks out the repository so that the workflow can access the files in the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Logs in to the GitHub Container Registry registry using the account of the user that triggered the workflow run and the GitHub token that is
+      # an automatically generated secret that is usually only used to access the repository (the permissions defined above allow the token to also
+      # publish Docker images to the GitHub Container Registry) that will publish the packages. Once published, the packages are scoped to the account defined here.
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if image exists on GHCR
+        id: image_check
+        uses: tyriis/docker-image-tag-exists@v2.1.0
+        with:
+          registry: ghcr.io
+          repository: "${{ env.IMAGE_NAME}}"
+          tag: "${{ github.ref_name }}"
+
+      - name: Set up tags
+        id: tags
+        if: ${{ steps.image_check.outputs.tag == 'not found' }}
+        run: |
+            {
+                echo 'tags<<EOF'
+                echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:latest"
+                echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ github.ref_name }}"
+                echo EOF
+            } >> "$GITHUB_OUTPUT"
+      
+      # Builds the Docker image for Bifrost; if the build succeeds, it is pushed to the GitHub Container Registry; the "context" parameter specifies
+      # the build context, which is the directory that contains the Dockerfile; the tags and labels extracted in the previous step are used to tag
+      # and label the image
+      - name: Build and Push Docker Image
+        id: build_and_push_docker_image
+        uses: docker/build-push-action@v6
+        if: ${{ steps.image_check.outputs.tag == 'not found' }}
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.tags.outputs.tags }}
+          labels: |
+            org.opencontainers.image.title=Bifrost Docker
+            org.opencontainers.image.authors=TheRealPSV
+          provenance: false
+
+      # Link to the Packages in the release
+      - name: Edit Release
+        uses: irongut/EditRelease@v1.2.0
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            id: ${{ github.event.release.id }}
+            body: "https://github.com/TheRealPSV/bifrost/pkgs/container/bifrost"
+
+      # Generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built; it increases supply chain
+      # security for people who consume the image
+      - name: Generate Artifact Attestation
+        uses: actions/attest-build-provenance@v1
+        if: ${{ steps.image_check.outputs.tag == 'not found' }}
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.build_and_push_docker_image.outputs.digest }}
+      
+      # Clean up untagged images
+      - name: Clean Up Untagged Images
+        uses: dataaxiom/ghcr-cleanup-action@v1.0.16
+        if: ${{ always()}}
+        with:
+          delete-untagged: true
+          delete-tags: 'sha256-*'

@@ -66,6 +66,7 @@ services:
       VITE_SEARCH_QUERY_PATH: search?q= #your search engine's subpath (your query is appended to this)
       VITE_TITLE_TEXT: B I F R O S T #the title displayed at the top of the page and as your tab page title
       VITE_HEADER_TEXT: Search the Web #the text heading above the search bar
+      VITE_BYPASS_FORCE_DARK: false #set this to true if you want to bypass Dark Reader and Android's Dark WebView
       #Backend values
       BASE_DOMAIN: example.com #the base domain of all your hosted services
       NGINXPM_URL: "https://nginx-proxy-manager.example.com" #the link to the URL for your Nginx Proxy Manager instance
@@ -110,6 +111,8 @@ networks: #note that this network is an example; it should be the same network y
 Bifrost works in Docker by building the frontend, then copying it to the `public` folder of the backend, which is an express app, so it can be served via express static. This allows both the frontend and backend to be hosted on a single port, simplifying the reverse proxy setup, no need to deal with CORS.
 
 In local dev, once you install the relevant Node/npm versions and run `npm install` in each folder, place a `.env.local` file in the frontend folder with the frontend values from the Docker Compose template, and another one in the backend folder with the corresponding backend values from the Docker Compose template (ideally pointing to a working Nginx Proxy Manager instance). The frontend `.env.local` supports an extra environment variable `API_HOST`, which should typically be set to `http://localhost:3001` while developing, since in local development, the frontend is hosted on a separate port.
+
+Once you have your configuration set up, just run `npm run dev` separately in the `frontend` and `backend` folders.
 
 The backend fetches data for the buttons for the frontend by querying Nginx Proxy Manager's API, ideally using a service account that only has read access to the proxy hosts.
 

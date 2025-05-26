@@ -18,6 +18,7 @@ const searchBaseUrl = import.meta.env.VITE_SEARCH_BASE_URL.endsWith("/") ? impor
 const searchQueryPath = import.meta.env.VITE_SEARCH_QUERY_PATH; // "search?q="
 const searchHeaderText = import.meta.env.VITE_HEADER_TEXT || ""; //Search the Web
 const titleText = import.meta.env.VITE_TITLE_TEXT || ""; //BIFROST
+const bypassForceDark = import.meta.env.VITE_BYPASS_FORCE_DARK || false; //if true, add meta tags that keep the DarkReader extension and Android's WebView Dark Mode from messing with the page colors
 const apiHost = import.meta.env.VITE_API_HOST || ""; //for dev we want a value, but for prod we actually want this blank since the site is served with express static
 
 const performSearch = function (query) {
@@ -117,6 +118,17 @@ export default function App() {
     setInterval(() => setCurrentTime(DateTime.local()), 1000);
     document.title = titleText;
     document.getElementById("favicon").setAttribute("href", faviconUrl);
+
+    if (bypassForceDark) {
+      const drLock = document.createElement('meta');
+      drLock.name = 'darkreader-lock';
+      document.head.appendChild(drLock);
+
+      const awLock = document.createElement('meta');
+      awLock.name = 'color-scheme';
+      awLock.content = 'only light';
+      document.head.appendChild(awLock);
+    }
   }, []);
 
   useEffect(() => {

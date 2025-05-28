@@ -41,7 +41,8 @@ app.get("/fetchHosts", async (req, res) => {
                     url,
                     hide
                 }
-            });
+            })
+            .filter(d => d.hide !== true) //hide anything meant to be hidden;
         res.json(hostInfo);
     } catch (e) {
         console.error(e);

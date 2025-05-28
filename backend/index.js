@@ -32,7 +32,7 @@ app.get("/fetchHosts", async (req, res) => {
             .filter(d => d.meta.nginx_online === true) //hide anything offline
             .map(d => {
                 const domain = d.domain_names?.[0] ?? "";
-                const hide = (d.advanced_config.match(subpathRegex)?.[1] ?? "").toLowerCase() === "true";
+                const hide = (d.advanced_config.match(hideRegex)?.[1] ?? "").toLowerCase() === "true";
                 const subpath = d.advanced_config.match(subpathRegex)?.[1] ?? "";
                 const url = `https://${domain}/${subpath}`;
                 const name = d.advanced_config.match(nameRegex)?.[1] ?? domain.replace("." + BASE_DOMAIN, "");

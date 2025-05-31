@@ -29,7 +29,7 @@ app.get("/fetchHosts", async (req, res) => {
         });
         const hosts = hostsData.data;
         const hostInfo = hosts
-            .filter(d => d.meta.nginx_online === true) //hide anything offline
+            .filter(d => d.enabled === true && d.meta.nginx_online === true) //hide anything offline
             .map(d => {
                 const domain = d.domain_names?.[0] ?? "";
                 const hide = (d.advanced_config.match(hideRegex)?.[1] ?? "").toLowerCase() === "true";

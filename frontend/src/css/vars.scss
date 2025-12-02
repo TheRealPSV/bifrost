@@ -13,6 +13,9 @@ $bg-zoom: auto;
 $bg-grid-color: #009dff88; //this is the color of the background gridlines
 $bg-color: #0088ff; //this is the background color if there's no image
 
+//browser UI light/dark (scrollbars, etc)
+$color-scheme: dark;
+
 //page title logo
 $logo-font-size: clamp(50px, 6dvw, 300px);
 $logo-font-weight: 800;

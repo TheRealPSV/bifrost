@@ -17,7 +17,8 @@ const defaultSearch = "Type here to go somewhere.";
 const searchBaseUrl = import.meta.env.VITE_SEARCH_BASE_URL.endsWith("/") ? import.meta.env.VITE_SEARCH_BASE_URL : import.meta.env.VITE_SEARCH_BASE_URL + "/"; // "https://search.brave.com/"
 const searchQueryPath = import.meta.env.VITE_SEARCH_QUERY_PATH; // "search?q="
 const searchHeaderText = import.meta.env.VITE_HEADER_TEXT || ""; //Search the Web
-const titleText = import.meta.env.VITE_TITLE_TEXT || ""; //BIFROST
+const titleText = import.meta.env.VITE_TITLE_TEXT || ""; //BIFROST — browser tab title
+const logoText = import.meta.env.VITE_LOGO_TEXT || ""; //logo text at the top of the page; blank when unset
 const bypassForceDark = import.meta.env.VITE_BYPASS_FORCE_DARK || false; //if true, add meta tags that keep the DarkReader extension and Android's WebView Dark Mode from messing with the page colors
 const apiHost = import.meta.env.VITE_API_HOST || ""; //for dev we want a value, but for prod we actually want this blank since the site is served with express static
 
@@ -147,7 +148,7 @@ export default function App() {
   return (
     <div className="wrapper">
       <Background submitted={submitted} />
-      <Header submitted={submitted} titleText={titleText} />
+      <Header submitted={submitted} logoText={logoText} />
       <Animator duration={{ enter: 100 }}>
         <div>
           <h1>

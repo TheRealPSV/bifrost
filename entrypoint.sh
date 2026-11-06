@@ -25,6 +25,7 @@ cd "$FRONTEND_DIR"
 echo "VITE_SEARCH_BASE_URL=$VITE_SEARCH_BASE_URL" >> .env.production
 echo "VITE_SEARCH_QUERY_PATH=$VITE_SEARCH_QUERY_PATH" >> .env.production
 echo "VITE_TITLE_TEXT=$VITE_TITLE_TEXT" >> .env.production
+echo "VITE_LOGO_TEXT=$VITE_LOGO_TEXT" >> .env.production
 echo "VITE_HEADER_TEXT=$VITE_HEADER_TEXT" >> .env.production
 echo "VITE_BYPASS_FORCE_DARK=$VITE_BYPASS_FORCE_DARK" >> .env.production
 

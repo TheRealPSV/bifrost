@@ -64,7 +64,8 @@ services:
       #Frontend values
       VITE_SEARCH_BASE_URL: https://search.brave.com/ #the base URL for your search engine
       VITE_SEARCH_QUERY_PATH: search?q= #your search engine's subpath (your query is appended to this)
-      VITE_TITLE_TEXT: B I F R O S T #the title displayed at the top of the page and as your tab page title
+      VITE_TITLE_TEXT: B I F R O S T #the browser tab page title
+      VITE_LOGO_TEXT: B I F R O S T #the logo text displayed at the top of the page; leave unset for a blank logo
       VITE_HEADER_TEXT: Search the Web #the text heading above the search bar
       VITE_BYPASS_FORCE_DARK: false #set this to true if you want to bypass Dark Reader and Android's Dark WebView
       #Backend values
@@ -86,7 +87,7 @@ networks: #note that this network is an example; it should be the same network y
     external: true
 ```
 
-2. Add any customization options you like! You can use Bifrost as-is and get a nice black and white theme with electric blue accents, but if you want to customize Bifrost's appearance, it's pretty easy. In addition to changing the title and "Search the Web" text via the Docker configuration, you can easily change the background, favicon, font, and colors to suit your tastes. Create the customization folder on your host machine for the customization volume in the config above, then follow the below notes to customize individual aspects. Bifrost watches that folder and rebuilds the frontend automatically when files change—just refresh your browser after the rebuild finishes (check the container logs for `Frontend reload complete`). Set `WATCH_CUSTOMIZATION=false` if you want to disable that.
+2. Add any customization options you like! You can use Bifrost as-is and get a nice black and white theme with electric blue accents, but if you want to customize Bifrost's appearance, it's pretty easy. In addition to changing the tab title, logo text, and "Search the Web" text via the Docker configuration, you can easily change the background, favicon, font, and colors to suit your tastes. Create the customization folder on your host machine for the customization volume in the config above, then follow the below notes to customize individual aspects. Bifrost watches that folder and rebuilds the frontend automatically when files change—just refresh your browser after the rebuild finishes (check the container logs for `Frontend reload complete`). Set `WATCH_CUSTOMIZATION=false` if you want to disable that.
    
    * To change any colors or other general styling, create the file `customization/css/overrides.scss`. Start with the file [here](https://github.com/TheRealPSV/bifrost/blob/master/frontend/src/css/overrides.scss) as your template. To use the example overrides, just uncomment the lines that set the variables. To see which values can be overridden, check out the base vars file [here](https://github.com/TheRealPSV/bifrost/blob/master/frontend/src/css/vars.scss), and follow the format in the template.
    

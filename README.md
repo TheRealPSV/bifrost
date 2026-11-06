@@ -64,7 +64,8 @@ services:
       #Frontend values
       VITE_SEARCH_BASE_URL: https://search.brave.com/ #the base URL for your search engine
       VITE_SEARCH_QUERY_PATH: search?q= #your search engine's subpath (your query is appended to this)
-      VITE_TITLE_TEXT: B I F R O S T #the title displayed at the top of the page and as your tab page title
+      VITE_TITLE_TEXT: B I F R O S T #the browser tab page title
+      VITE_LOGO_TEXT: B I F R O S T #the logo text displayed at the top of the page; leave unset for a blank logo
       VITE_HEADER_TEXT: Search the Web #the text heading above the search bar
       VITE_BYPASS_FORCE_DARK: false #set this to true if you want to bypass Dark Reader and Android's Dark WebView
       #Backend values

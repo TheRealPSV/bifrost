@@ -95,6 +95,10 @@
       }
     }
 
+    .maincontent form {
+      width: 90dvw;
+    }
+
     #searchbox {
       text-shadow: vars.$searchbox-text-shadow;
       font-weight: vars.$searchbox-font-weight;
@@ -104,6 +108,12 @@
       background-color: rgba(255, 255, 255, 0);
       border: 0px;
       position: relative;
+
+      // Full width while the placeholder (default value + .textCenter) is
+      // visible; size="25" takes over again once that class is removed.
+      &.textCenter {
+        width: 100%;
+      }
     }
 
     #date {
